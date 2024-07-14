@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id       Int      @id @default(autoincrement())
+  username String
+
+  posts    Post[]
+  votes    Vote[]
+}
+
+enum VoteType {
+  UP
+  DOWN
+}
+
+model Vote {
+  userId  Int    
+  postId  Int
+  type    VoteType
+
+  post    Post     @relation(fields: [postId], references: [id])
+  user    User     @relation(fields: [userId], references: [id])
+  
+  @@id([postId, userId])
+}
+
+model Post {
+  id         Int       @id @default(autoincrement())
+  likes      Int       @default(0)
+  dislikes   Int       @default(0)
+  title      String
+  body       String
+  createdBy  Int
+  thumbnail  String?
+
+  author     User      @relation(fields: [createdBy], references: [id])
+  votes      Vote[]
+}
