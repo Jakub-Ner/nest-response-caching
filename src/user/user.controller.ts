@@ -1,6 +1,9 @@
-import { Controller, Param, Body, Post, Get } from '@nestjs/common';
+import { Controller, Param, Body, Post, Get, Patch } from '@nestjs/common';
 import { UserService } from './user.service';
+import { ApiTags } from '@nestjs/swagger';
+import { UserPatchDto } from './dto/user-patch-dto';
 
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -15,12 +18,12 @@ export class UserController {
     return this.userService.findById(id);
   }
 
-  @Post(':id')
+  @Patch(':id')
   async updateUsername(
     @Param('id') id: string,
-    @Body('newUsername') newUsername: string,
+    @Body() userPatchDto: UserPatchDto,
   ) {
-    return this.userService.updateUsername(id, newUsername);
+    return this.userService.updateUsername(id, userPatchDto.newUsername);
   }
 
   @Get(':slack')
