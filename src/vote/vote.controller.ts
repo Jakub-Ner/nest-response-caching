@@ -1,5 +1,6 @@
 import { Controller, Param, Post, Get, Body } from '@nestjs/common';
 import { VoteService } from './vote.service';
+import { $Enums } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
 import { VoteDto } from './dto/vote-dto';
 
@@ -27,5 +28,10 @@ export class VoteController {
     @Body() voteDto: VoteDto,
   ) {
     return this.voteService.downvote(postId, voteDto.userId);
+  }
+
+  @Get('types')
+  async getTypes() {
+    return $Enums.VoteType;
   }
 }
