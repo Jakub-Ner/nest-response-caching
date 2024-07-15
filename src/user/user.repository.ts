@@ -10,10 +10,10 @@ export class UserRepository {
     return this.prismaClient.user.findMany();
   }
 
-  async findBySlack(slack: string) {
-    return this.prismaClient.user.findFirst({
+  async findBySlack(slug: string) {
+    return this.prismaClient.user.findUnique({
       where: {
-        username: slack,
+        username: slug,
       },
     });
   }

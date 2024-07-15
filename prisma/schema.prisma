@@ -16,7 +16,7 @@ datasource db {
 
 model User {
   id       Int      @id @default(autoincrement())
-  username String
+  username String   @unique
 
   posts    Post[]
   votes    Vote[]

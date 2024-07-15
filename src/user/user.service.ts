@@ -10,8 +10,8 @@ export class UserService {
     return this.userRepository.findAll();
   }
 
-  async findBySlack(slack: string) {
-    return this.userRepository.findBySlack(slack);
+  async findBySlack(slug: string) {
+    return this.userRepository.findBySlack(slug);
   }
 
   findById(id: string) {

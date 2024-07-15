@@ -13,12 +13,12 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get(':id')
+  @Get('one/:id')
   async findById(@Param('id') id: string) {
     return this.userService.findById(id);
   }
 
-  @Patch(':id')
+  @Patch('one/:id')
   async updateUsername(
     @Param('id') id: string,
     @Body() userPatchDto: UserPatchDto,
@@ -26,8 +26,8 @@ export class UserController {
     return this.userService.updateUsername(id, userPatchDto.newUsername);
   }
 
-  @Get(':slack')
-  async findBySlack(@Param('slack') slack: string) {
-    return this.userService.findBySlack(slack);
+  @Get('slug/:slug')
+  async findBySlack(@Param('slug') slug: string) {
+    return this.userService.findBySlack(slug);
   }
 }
