@@ -10,6 +10,7 @@ export class UserController {
 
   @Get()
   async findAll() {
+    console.log('sra')
     return this.userService.findAll();
   }
 

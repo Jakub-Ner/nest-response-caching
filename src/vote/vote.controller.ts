@@ -15,18 +15,12 @@ export class VoteController {
   }
 
   @Post('upvote/:postId')
-  async upvote(
-    @Param('postId') postId: string,
-    @Body() voteDto: VoteDto,
-  ) {
+  async upvote(@Param('postId') postId: string, @Body() voteDto: VoteDto) {
     return this.voteService.upvote(postId, voteDto.userId);
   }
 
   @Post('downvote/:postId')
-  async downvote(
-    @Param('postId') postId: string,
-    @Body() voteDto: VoteDto,
-  ) {
+  async downvote(@Param('postId') postId: string, @Body() voteDto: VoteDto) {
     return this.voteService.downvote(postId, voteDto.userId);
   }
 
