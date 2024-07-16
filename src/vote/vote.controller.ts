@@ -3,6 +3,7 @@ import { VoteService } from './vote.service';
 import { $Enums } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
 import { VoteDto } from './dto/vote-dto';
+import { CacheTTL } from '@nestjs/cache-manager';
 
 @ApiTags('vote')
 @Controller('vote')
@@ -24,6 +25,7 @@ export class VoteController {
     return this.voteService.downvote(postId, voteDto.userId);
   }
 
+  @CacheTTL(0)
   @Get('types')
   async getTypes() {
     return $Enums.VoteType;

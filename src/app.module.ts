@@ -6,6 +6,7 @@ import { VoteModule } from './vote/vote.module';
 import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { MetadataModule } from './metadata/metadata.module';
 
 const DEFAULT_CACHE_TTL_SECONDS = 1_000 * 60 * 60; // 1h
 const REDIS_HOST = 'localhost';
@@ -24,6 +25,7 @@ const RedisCacheManager = redisStore({
     UserModule,
     VoteModule,
     PostModule,
+    MetadataModule,
     CacheModule.registerAsync({
       isGlobal: true,
       useFactory: async () => ({

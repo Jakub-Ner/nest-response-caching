@@ -1,7 +1,9 @@
-import { Controller, Param, Body, Post, Get, Patch } from '@nestjs/common';
+import { Controller, Param, Body, Post, Get, Patch, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
 import { UserPatchDto } from './dto/user-patch-dto';
+import { ClearCacheInterceptor } from 'src/clear-cache.interceptor';
+import { CLEAR_CACHE_KEY, ClearCache } from 'src/clear-cache.decorator';
 
 @ApiTags('user')
 @Controller('user')
@@ -10,7 +12,6 @@ export class UserController {
 
   @Get()
   async findAll() {
-    console.log('sra')
     return this.userService.findAll();
   }
 
@@ -20,6 +21,8 @@ export class UserController {
   }
 
   @Patch('one/:id')
+  @UseInterceptors(ClearCacheInterceptor) // link interceptor with enpoint
+  @ClearCache(['/user'])  
   async updateUsername(
     @Param('id') id: string,
     @Body() userPatchDto: UserPatchDto,
